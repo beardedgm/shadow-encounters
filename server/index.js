@@ -1,5 +1,9 @@
-const dns = require('dns');
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+// Custom DNS servers fix Windows Node.js SRV resolution for MongoDB Atlas
+// Skip in production (Render's Linux DNS works natively)
+if (process.env.NODE_ENV !== 'production') {
+  const dns = require('dns');
+  dns.setServers(['8.8.8.8', '8.8.4.4']);
+}
 
 const express = require('express');
 const cors = require('cors');
