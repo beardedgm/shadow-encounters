@@ -3,6 +3,10 @@ const auth = require('../middleware/auth');
 const { checkLimit } = require('../middleware/checkLimit');
 const Monster = require('../models/Monster');
 
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 router.use(auth);
 
 // GET /api/monsters?search=goblin — returns global seeds + user's own
@@ -12,7 +16,7 @@ router.get('/', async (req, res, next) => {
       $or: [{ userId: null }, { userId: req.user._id }],
     };
     if (req.query.search) {
-      filter.name = { $regex: req.query.search, $options: 'i' };
+      filter.name = { $regex: escapeRegex(req.query.search), $options: 'i' };
     }
     const monsters = await Monster.find(filter).sort({ level: 1, name: 1 });
     res.json(monsters);

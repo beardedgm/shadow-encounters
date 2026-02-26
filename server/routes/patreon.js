@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const User = require('../models/User');
 
@@ -17,7 +18,7 @@ router.get('/link', auth, (req, res) => {
     client_id: process.env.PATREON_CLIENT_ID,
     redirect_uri: process.env.PATREON_REDIRECT_URI,
     scope: 'identity identity.memberships',
-    state: req.user._id.toString(),
+    state: jwt.sign({ userId: req.user._id }, process.env.JWT_SECRET, { expiresIn: '10m' }),
   });
 
   res.json({ url: `${PATREON_AUTH_URL}?${params}` });
@@ -26,11 +27,11 @@ router.get('/link', auth, (req, res) => {
 // GET /api/patreon/callback — Patreon redirects here after authorization
 router.get('/callback', async (req, res) => {
   try {
-    const { code, state: userId } = req.query;
+    const { code, state } = req.query;
 
     const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
 
-    if (!code || !userId) {
+    if (!code || !state) {
       return res.redirect(`${clientUrl}/?patreon=error`);
     }
 
@@ -50,6 +51,16 @@ router.get('/callback', async (req, res) => {
 
     if (!tokenData.access_token) {
       console.error('Patreon token exchange failed:', tokenData);
+      return res.redirect(`${clientUrl}/?patreon=error`);
+    }
+
+    // Verify the signed state to get the trusted userId
+    let userId;
+    try {
+      const decoded = jwt.verify(state, process.env.JWT_SECRET);
+      userId = decoded.userId;
+    } catch (stateErr) {
+      console.error('Patreon state verification failed:', stateErr.message);
       return res.redirect(`${clientUrl}/?patreon=error`);
     }
 
