@@ -19,9 +19,12 @@ app.use(cors());
 app.use(express.json());
 
 // API Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/usage', require('./routes/usage'));
 app.use('/api/monsters', require('./routes/monsters'));
 app.use('/api/encounters', require('./routes/encounters'));
 app.use('/api/combat-sessions', require('./routes/combatSessions'));
+app.use('/api/patreon', require('./routes/patreon'));
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));

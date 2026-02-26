@@ -1,12 +1,16 @@
 const router = require('express').Router();
+const auth = require('../middleware/auth');
+const { checkLimit } = require('../middleware/checkLimit');
 const CombatSession = require('../models/CombatSession');
 const Encounter = require('../models/Encounter');
 const Monster = require('../models/Monster');
 
+router.use(auth);
+
 // GET /api/combat-sessions?status=active
 router.get('/', async (req, res, next) => {
   try {
-    const filter = {};
+    const filter = { userId: req.user._id };
     if (req.query.status) filter.status = req.query.status;
     const sessions = await CombatSession.find(filter).sort({ createdAt: -1 });
     res.json(sessions);
@@ -18,7 +22,7 @@ router.get('/', async (req, res, next) => {
 // GET /api/combat-sessions/:id
 router.get('/:id', async (req, res, next) => {
   try {
-    const session = await CombatSession.findById(req.params.id);
+    const session = await CombatSession.findOne({ _id: req.params.id, userId: req.user._id });
     if (!session) return res.status(404).json({ message: 'Session not found' });
     res.json(session);
   } catch (err) {
@@ -27,11 +31,12 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // POST /api/combat-sessions — create from an encounter
-router.post('/', async (req, res, next) => {
+router.post('/', checkLimit('combatSessions'), async (req, res, next) => {
   try {
     const { encounterId, name } = req.body;
 
-    const encounter = await Encounter.findById(encounterId)
+    // Verify encounter belongs to this user
+    const encounter = await Encounter.findOne({ _id: encounterId, userId: req.user._id })
       .populate('monsters.monsterId');
     if (!encounter) return res.status(404).json({ message: 'Encounter not found' });
 
@@ -56,6 +61,7 @@ router.post('/', async (req, res, next) => {
     }
 
     const session = await CombatSession.create({
+      userId: req.user._id,
       encounterId,
       name: name || encounter.name,
       combatants,
@@ -71,7 +77,7 @@ router.post('/', async (req, res, next) => {
 // POST /api/combat-sessions/:id/combatants — add a PC
 router.post('/:id/combatants', async (req, res, next) => {
   try {
-    const session = await CombatSession.findById(req.params.id);
+    const session = await CombatSession.findOne({ _id: req.params.id, userId: req.user._id });
     if (!session) return res.status(404).json({ message: 'Session not found' });
 
     const { name, ac, maxHP, initiativeBonus } = req.body;
@@ -95,7 +101,7 @@ router.post('/:id/combatants', async (req, res, next) => {
 // PATCH /api/combat-sessions/:id/combatants/:combatantId
 router.patch('/:id/combatants/:combatantId', async (req, res, next) => {
   try {
-    const session = await CombatSession.findById(req.params.id);
+    const session = await CombatSession.findOne({ _id: req.params.id, userId: req.user._id });
     if (!session) return res.status(404).json({ message: 'Session not found' });
 
     const combatant = session.combatants.id(req.params.combatantId);
@@ -120,16 +126,14 @@ router.patch('/:id/combatants/:combatantId', async (req, res, next) => {
 // POST /api/combat-sessions/:id/roll-initiative
 router.post('/:id/roll-initiative', async (req, res, next) => {
   try {
-    const session = await CombatSession.findById(req.params.id);
+    const session = await CombatSession.findOne({ _id: req.params.id, userId: req.user._id });
     if (!session) return res.status(404).json({ message: 'Session not found' });
 
-    // Roll d20 + bonus for each combatant
     session.combatants.forEach((c) => {
       const roll = Math.floor(Math.random() * 20) + 1;
       c.initiative = roll + c.initiativeBonus;
     });
 
-    // Sort descending by initiative
     session.combatants.sort((a, b) => b.initiative - a.initiative);
     session.currentTurnIndex = 0;
     session.round = 1;
@@ -144,7 +148,7 @@ router.post('/:id/roll-initiative', async (req, res, next) => {
 // POST /api/combat-sessions/:id/next-turn
 router.post('/:id/next-turn', async (req, res, next) => {
   try {
-    const session = await CombatSession.findById(req.params.id);
+    const session = await CombatSession.findOne({ _id: req.params.id, userId: req.user._id });
     if (!session) return res.status(404).json({ message: 'Session not found' });
 
     const total = session.combatants.length;
@@ -170,10 +174,9 @@ router.post('/:id/next-turn', async (req, res, next) => {
 // POST /api/combat-sessions/:id/complete
 router.post('/:id/complete', async (req, res, next) => {
   try {
-    const session = await CombatSession.findById(req.params.id);
+    const session = await CombatSession.findOne({ _id: req.params.id, userId: req.user._id });
     if (!session) return res.status(404).json({ message: 'Session not found' });
 
-    // Calculate XP from defeated monsters
     let totalXP = 0;
     for (const c of session.combatants) {
       if (c.type === 'monster' && c.isDefeated && c.monsterId) {

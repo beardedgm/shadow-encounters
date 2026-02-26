@@ -14,6 +14,7 @@ const combatantSchema = new mongoose.Schema({
 });
 
 const combatSessionSchema = new mongoose.Schema({
+  userId:           { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   encounterId:      { type: mongoose.Schema.Types.ObjectId, ref: 'Encounter', default: null },
   name:             { type: String, required: true },
   combatants:       { type: [combatantSchema], default: [] },

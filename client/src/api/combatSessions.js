@@ -1,22 +1,24 @@
+import { authFetch } from './helpers';
+
 const BASE = '/api/combat-sessions';
 
 export async function getSessions(status = '') {
   const url = status ? `${BASE}?status=${status}` : BASE;
-  const res = await fetch(url);
+  const res = await authFetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
 export async function getSession(id) {
-  const res = await fetch(`${BASE}/${id}`);
+  const res = await authFetch(`${BASE}/${id}`);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
 export async function createSession(encounterId, name) {
-  const res = await fetch(BASE, {
+  const res = await authFetch(BASE, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+
     body: JSON.stringify({ encounterId, name }),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -24,9 +26,9 @@ export async function createSession(encounterId, name) {
 }
 
 export async function addCombatant(sessionId, data) {
-  const res = await fetch(`${BASE}/${sessionId}/combatants`, {
+  const res = await authFetch(`${BASE}/${sessionId}/combatants`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -34,9 +36,9 @@ export async function addCombatant(sessionId, data) {
 }
 
 export async function updateCombatant(sessionId, combatantId, data) {
-  const res = await fetch(`${BASE}/${sessionId}/combatants/${combatantId}`, {
+  const res = await authFetch(`${BASE}/${sessionId}/combatants/${combatantId}`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -44,19 +46,19 @@ export async function updateCombatant(sessionId, combatantId, data) {
 }
 
 export async function rollInitiative(sessionId) {
-  const res = await fetch(`${BASE}/${sessionId}/roll-initiative`, { method: 'POST' });
+  const res = await authFetch(`${BASE}/${sessionId}/roll-initiative`, { method: 'POST' });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
 export async function nextTurn(sessionId) {
-  const res = await fetch(`${BASE}/${sessionId}/next-turn`, { method: 'POST' });
+  const res = await authFetch(`${BASE}/${sessionId}/next-turn`, { method: 'POST' });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
 export async function completeCombat(sessionId) {
-  const res = await fetch(`${BASE}/${sessionId}/complete`, { method: 'POST' });
+  const res = await authFetch(`${BASE}/${sessionId}/complete`, { method: 'POST' });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { authFetch } from '../api/helpers';
 
 export function useFetch(url) {
   const [data, setData] = useState(null);
@@ -16,7 +17,7 @@ export function useFetch(url) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await fetch(url);
+        const res = await authFetch(url);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
         if (!cancelled) setData(json);

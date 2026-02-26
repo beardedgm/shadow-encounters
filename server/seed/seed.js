@@ -12,8 +12,8 @@ async function seed() {
     await mongoose.connect(process.env.MONGO_URI);
     console.log('Connected to MongoDB');
 
-    await Monster.deleteMany({});
-    console.log('Cleared existing monsters');
+    await Monster.deleteMany({ userId: null });
+    console.log('Cleared global seed monsters (user monsters preserved)');
 
     const inserted = await Monster.insertMany(monsters);
     console.log(`Seeded ${inserted.length} monsters`);

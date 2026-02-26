@@ -7,6 +7,7 @@ const attackSchema = new mongoose.Schema({
 }, { _id: false });
 
 const monsterSchema = new mongoose.Schema({
+  userId:           { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
   name:             { type: String, required: true, trim: true },
   level:            { type: Number, required: true, min: 0, max: 30 },
   ac:               { type: Number, required: true },

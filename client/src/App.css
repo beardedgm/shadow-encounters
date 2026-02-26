@@ -871,6 +871,215 @@ label {
   background: var(--accent-dim);
 }
 
+/* === AUTH PAGES === */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  padding: 1rem;
+}
+
+.auth-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-card h1 {
+  color: var(--accent);
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.auth-card h2 {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+.auth-error {
+  background: rgba(192, 57, 43, 0.15);
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.auth-link {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.auth-link a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
+
+.loading-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+}
+
+/* === ACCOUNT PAGE === */
+
+.account-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  max-width: 500px;
+}
+
+.account-card h2 {
+  color: var(--accent);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.account-field {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.account-field:last-child {
+  border-bottom: none;
+}
+
+.account-label {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.account-desc {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.account-status {
+  color: var(--success);
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+/* === USAGE BANNER === */
+
+.usage-banner {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.4rem 2rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  justify-content: center;
+}
+
+.usage-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.usage-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.usage-bar {
+  width: 60px;
+  height: 6px;
+  background: var(--bg-primary);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.usage-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+
+.usage-count {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  min-width: 30px;
+}
+
+/* === NAVBAR USER === */
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-name {
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+.user-tier {
+  font-size: 0.65rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tier-free {
+  background: rgba(138, 138, 154, 0.2);
+  color: var(--text-secondary);
+}
+
+.tier-patron {
+  background: rgba(230, 169, 25, 0.2);
+  color: var(--accent);
+}
+
+.btn-logout {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-logout:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
 /* === RESPONSIVE === */
 
 @media (max-width: 768px) {

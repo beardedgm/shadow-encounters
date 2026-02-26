@@ -10,6 +10,11 @@ const errorHandler = (err, req, res, next) => {
     return res.status(400).json({ message: 'Invalid ID format' });
   }
 
+  // Duplicate key (e.g. email already registered)
+  if (err.code === 11000) {
+    return res.status(400).json({ message: 'Email already registered' });
+  }
+
   res.status(500).json({ message: 'Server error' });
 };
 
