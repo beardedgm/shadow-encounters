@@ -28,8 +28,10 @@ router.get('/callback', async (req, res) => {
   try {
     const { code, state: userId } = req.query;
 
+    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+
     if (!code || !userId) {
-      return res.redirect('/?patreon=error');
+      return res.redirect(`${clientUrl}/?patreon=error`);
     }
 
     // Exchange authorization code for access token
@@ -48,19 +50,23 @@ router.get('/callback', async (req, res) => {
 
     if (!tokenData.access_token) {
       console.error('Patreon token exchange failed:', tokenData);
-      return res.redirect('/?patreon=error');
+      return res.redirect(`${clientUrl}/?patreon=error`);
     }
 
-    // Get user identity with memberships
+    // Get user identity with memberships (include campaign relationship for filtering)
     const identityRes = await fetch(
-      `${PATREON_API_URL}/identity?include=memberships&fields[member]=patron_status,currently_entitled_amount_cents`,
+      `${PATREON_API_URL}/identity?include=memberships,memberships.campaign&fields[member]=patron_status,currently_entitled_amount_cents`,
       { headers: { Authorization: `Bearer ${tokenData.access_token}` } }
     );
     const identity = await identityRes.json();
 
-    // Check if user is an active patron
+    // Check if user is an active patron of this campaign
+    const campaignId = process.env.PATREON_CAMPAIGN_ID;
     const isPatron = identity.included?.some(
-      (inc) => inc.type === 'member' && inc.attributes.patron_status === 'active_patron'
+      (inc) =>
+        inc.type === 'member' &&
+        inc.attributes.patron_status === 'active_patron' &&
+        (!campaignId || inc.relationships?.campaign?.data?.id === campaignId)
     );
 
     // Update user record
@@ -72,10 +78,11 @@ router.get('/callback', async (req, res) => {
       await user.save();
     }
 
-    res.redirect(`/?patreon=${isPatron ? 'success' : 'linked'}`);
+    res.redirect(`${clientUrl}/?patreon=${isPatron ? 'success' : 'linked'}`);
   } catch (err) {
     console.error('Patreon callback error:', err);
-    res.redirect('/?patreon=error');
+    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+    res.redirect(`${clientUrl}/?patreon=error`);
   }
 });
 
