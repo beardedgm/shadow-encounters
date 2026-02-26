@@ -39,6 +39,12 @@ app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 5000;
+console.log(`Starting server... (NODE_ENV: ${process.env.NODE_ENV || 'development'})`);
+console.log(`MONGO_URI: ${process.env.MONGO_URI ? 'set' : 'NOT SET'}`);
+
 connectDB().then(() => {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}).catch(err => {
+  console.error(`Failed to start: ${err.message}`);
+  setTimeout(() => process.exit(1), 100);
 });
