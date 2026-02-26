@@ -1,0 +1,188 @@
+[
+  {
+    "name": "Giant Rat",
+    "level": 0,
+    "ac": 10,
+    "hp": 3,
+    "attacks": [{ "name": "Bite", "bonus": 0, "damage": "1d4" }],
+    "movement": "near",
+    "abilityModifiers": { "str": -2, "dex": 1, "con": 0, "int": -4, "wis": -1, "cha": -4 },
+    "alignment": "N",
+    "specialAbilities": "",
+    "xp": 1
+  },
+  {
+    "name": "Kobold",
+    "level": 0,
+    "ac": 11,
+    "hp": 3,
+    "attacks": [{ "name": "Dagger", "bonus": 0, "damage": "1d4" }],
+    "movement": "near",
+    "abilityModifiers": { "str": -2, "dex": 1, "con": -1, "int": 0, "wis": -1, "cha": -2 },
+    "alignment": "C",
+    "specialAbilities": "Knack for traps. Gains advantage on checks to detect or disarm traps.",
+    "xp": 1
+  },
+  {
+    "name": "Goblin",
+    "level": 1,
+    "ac": 11,
+    "hp": 5,
+    "attacks": [{ "name": "Shortsword", "bonus": 1, "damage": "1d6" }],
+    "movement": "near",
+    "abilityModifiers": { "str": 0, "dex": 1, "con": 0, "int": 0, "wis": -1, "cha": -1 },
+    "alignment": "C",
+    "specialAbilities": "Sneaky. Can hide as a bonus action if near cover.",
+    "xp": 2
+  },
+  {
+    "name": "Skeleton",
+    "level": 1,
+    "ac": 12,
+    "hp": 5,
+    "attacks": [{ "name": "Rusty Sword", "bonus": 1, "damage": "1d6" }],
+    "movement": "near",
+    "abilityModifiers": { "str": 0, "dex": 0, "con": 0, "int": -4, "wis": -2, "cha": -4 },
+    "alignment": "C",
+    "specialAbilities": "Undead. Immune to morale checks, sleep, charm, and poison.",
+    "xp": 2
+  },
+  {
+    "name": "Zombie",
+    "level": 1,
+    "ac": 9,
+    "hp": 8,
+    "attacks": [{ "name": "Slam", "bonus": 1, "damage": "1d6" }],
+    "movement": "close",
+    "abilityModifiers": { "str": 1, "dex": -2, "con": 2, "int": -4, "wis": -3, "cha": -4 },
+    "alignment": "C",
+    "specialAbilities": "Undead. Immune to morale checks, sleep, charm, and poison. Relentless: On first reaching 0 HP, make a DC 12 CON check. On success, return to 1 HP.",
+    "xp": 2
+  },
+  {
+    "name": "Bandit",
+    "level": 1,
+    "ac": 12,
+    "hp": 5,
+    "attacks": [{ "name": "Shortsword", "bonus": 1, "damage": "1d6" }],
+    "movement": "near",
+    "abilityModifiers": { "str": 0, "dex": 1, "con": 0, "int": 0, "wis": 0, "cha": 0 },
+    "alignment": "N",
+    "specialAbilities": "May carry a shortbow (1d6, far range).",
+    "xp": 2
+  },
+  {
+    "name": "Giant Spider",
+    "level": 2,
+    "ac": 12,
+    "hp": 9,
+    "attacks": [{ "name": "Bite", "bonus": 2, "damage": "1d6" }],
+    "movement": "near (climb)",
+    "abilityModifiers": { "str": 0, "dex": 2, "con": 0, "int": -4, "wis": 0, "cha": -4 },
+    "alignment": "N",
+    "specialAbilities": "Venomous Bite. On hit, target makes DC 12 CON check or takes 1d4 additional poison damage. Web. Can shoot a web (near range). Target makes DC 12 DEX check or is restrained.",
+    "xp": 3
+  },
+  {
+    "name": "Orc",
+    "level": 2,
+    "ac": 13,
+    "hp": 9,
+    "attacks": [{ "name": "Greataxe", "bonus": 3, "damage": "1d8" }],
+    "movement": "near",
+    "abilityModifiers": { "str": 2, "dex": 0, "con": 1, "int": -1, "wis": 0, "cha": -1 },
+    "alignment": "C",
+    "specialAbilities": "Bloodlust. Advantage on attacks against targets below half HP.",
+    "xp": 3
+  },
+  {
+    "name": "Shadow",
+    "level": 3,
+    "ac": 12,
+    "hp": 14,
+    "attacks": [{ "name": "Chilling Touch", "bonus": 3, "damage": "1d6" }],
+    "movement": "near (fly)",
+    "abilityModifiers": { "str": -2, "dex": 2, "con": 0, "int": -1, "wis": 0, "cha": -2 },
+    "alignment": "C",
+    "specialAbilities": "Undead. Incorporeal: Only harmed by magical weapons and spells. Strength Drain: On hit, target makes DC 13 CON check or takes 1 STR damage. Death if reduced to 0 STR.",
+    "xp": 5
+  },
+  {
+    "name": "Bugbear",
+    "level": 3,
+    "ac": 13,
+    "hp": 14,
+    "attacks": [{ "name": "Morningstar", "bonus": 3, "damage": "1d8" }],
+    "movement": "near",
+    "abilityModifiers": { "str": 2, "dex": 1, "con": 1, "int": 0, "wis": 0, "cha": -1 },
+    "alignment": "C",
+    "specialAbilities": "Ambusher. Deals double damage on the first attack in combat if the target is surprised.",
+    "xp": 5
+  },
+  {
+    "name": "Mimic",
+    "level": 3,
+    "ac": 12,
+    "hp": 14,
+    "attacks": [{ "name": "Pseudopod", "bonus": 3, "damage": "1d8" }],
+    "movement": "close",
+    "abilityModifiers": { "str": 2, "dex": 0, "con": 1, "int": -2, "wis": 0, "cha": -3 },
+    "alignment": "N",
+    "specialAbilities": "Shapechanger. Can mimic the appearance of any object of similar size. Adhesive. On hit, target makes DC 13 STR check or is grappled. Grappled target takes 1d8 damage at the start of each of its turns.",
+    "xp": 5
+  },
+  {
+    "name": "Owlbear",
+    "level": 4,
+    "ac": 13,
+    "hp": 18,
+    "attacks": [
+      { "name": "Claw", "bonus": 4, "damage": "1d8" },
+      { "name": "Beak", "bonus": 4, "damage": "1d6" }
+    ],
+    "movement": "near",
+    "abilityModifiers": { "str": 3, "dex": 0, "con": 2, "int": -4, "wis": 1, "cha": -2 },
+    "alignment": "N",
+    "specialAbilities": "Keen Senses. Advantage on WIS checks to detect hidden creatures. Multiattack. Makes one claw attack and one beak attack.",
+    "xp": 9
+  },
+  {
+    "name": "Ogre",
+    "level": 4,
+    "ac": 11,
+    "hp": 18,
+    "attacks": [{ "name": "Greatclub", "bonus": 4, "damage": "2d6" }],
+    "movement": "near",
+    "abilityModifiers": { "str": 4, "dex": -1, "con": 2, "int": -2, "wis": -1, "cha": -2 },
+    "alignment": "C",
+    "specialAbilities": "Crushing Blow. On a natural 20, the target is knocked prone.",
+    "xp": 9
+  },
+  {
+    "name": "Troll",
+    "level": 5,
+    "ac": 12,
+    "hp": 23,
+    "attacks": [
+      { "name": "Claw", "bonus": 5, "damage": "1d8" },
+      { "name": "Bite", "bonus": 5, "damage": "1d6" }
+    ],
+    "movement": "near",
+    "abilityModifiers": { "str": 4, "dex": 0, "con": 3, "int": -2, "wis": -1, "cha": -3 },
+    "alignment": "C",
+    "specialAbilities": "Regeneration. Regains 3 HP at the start of its turn unless it took fire or acid damage since its last turn. Multiattack. Makes two claw attacks and one bite attack.",
+    "xp": 14
+  },
+  {
+    "name": "Wraith",
+    "level": 5,
+    "ac": 14,
+    "hp": 23,
+    "attacks": [{ "name": "Life Drain", "bonus": 5, "damage": "1d8" }],
+    "movement": "near (fly)",
+    "abilityModifiers": { "str": -1, "dex": 2, "con": 0, "int": 0, "wis": 1, "cha": 1 },
+    "alignment": "C",
+    "specialAbilities": "Undead. Incorporeal: Only harmed by magical weapons and spells. Life Drain: On hit, target makes DC 14 CON check or max HP is reduced by the damage taken. Dies if reduced to 0 max HP. Sunlight Sensitivity: Disadvantage on attacks in sunlight.",
+    "xp": 14
+  }
+]
